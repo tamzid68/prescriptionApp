@@ -1,6 +1,7 @@
 package com.example.prescriptionApp.service;
 
 import com.example.prescriptionApp.dto.PrescriptionDto;
+import com.example.prescriptionApp.dto.PrescriptionReportDto;
 import com.example.prescriptionApp.dto.PrescriptionRequest;
 import com.example.prescriptionApp.entity.Prescription;
 import com.example.prescriptionApp.exception.ResourceNotFoundException;
@@ -57,6 +58,13 @@ public class PrescriptionService {
 
         repo.save(p);
         return toDto(p);
+    }
+
+    public List<PrescriptionReportDto> getReport(LocalDate from, LocalDate to){
+        List<Object[]> results = repo.countByDateRange(from, to);
+        return results.stream()
+                .map(r -> new PrescriptionReportDto((LocalDate) r[0], (Long) r[1]))
+                .collect(Collectors.toList());
     }
 
     public void delete(Long id){

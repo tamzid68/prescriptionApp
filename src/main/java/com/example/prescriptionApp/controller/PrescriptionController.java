@@ -1,6 +1,7 @@
 package com.example.prescriptionApp.controller;
 
 import com.example.prescriptionApp.dto.PrescriptionDto;
+import com.example.prescriptionApp.dto.PrescriptionReportDto;
 import com.example.prescriptionApp.dto.PrescriptionRequest;
 import com.example.prescriptionApp.service.PrescriptionService;
 import jakarta.validation.Valid;
@@ -27,6 +28,15 @@ public class PrescriptionController {
         LocalDate fromDate = (from != null) ? LocalDate.parse(from) : LocalDate.now().withDayOfMonth(1);
         LocalDate toDate = (to != null) ? LocalDate.parse(to) : LocalDate.now();
         return service.getbyDateRange(fromDate, toDate);
+    }
+    @GetMapping("/report")
+    public List<PrescriptionReportDto> report(
+            @RequestParam(required = false) String from,
+            @RequestParam(required = false) String to) {
+
+        LocalDate fromDate = (from != null) ? LocalDate.parse(from) : LocalDate.now().withDayOfMonth(1);
+        LocalDate toDate = (to != null) ? LocalDate.parse(to) : LocalDate.now();
+        return service.getReport(fromDate, toDate);
     }
 
     @PostMapping

@@ -11,4 +11,12 @@ public interface PrescriptionRepository  extends JpaRepository<Prescription, Lon
 
     @Query("SELECT p FROM Prescription p WHERE p.prescriptionDate BETWEEN :start AND :end ORDER BY p.prescriptionDate DESC")
     List<Prescription> findbyDataRange(@Param("start") LocalDate start, @Param("end") LocalDate end);
+
+    @Query("SELECT p.prescriptionDate AS date, COUNT(p) AS count " +
+            "FROM Prescription p " +
+            "WHERE p.prescriptionDate BETWEEN :start AND :end " +
+            "GROUP BY p.prescriptionDate " +
+            "ORDER BY p.prescriptionDate ASC")
+    List<Object[]> countByDateRange(@Param("start") LocalDate start,
+                                    @Param("end") LocalDate end);
 }
