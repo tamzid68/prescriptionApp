@@ -3,8 +3,11 @@ package com.example.prescriptionApp.service;
 import com.example.prescriptionApp.dto.PrescriptionDto;
 import com.example.prescriptionApp.dto.PrescriptionRequest;
 import com.example.prescriptionApp.entity.Prescription;
+import com.example.prescriptionApp.exception.ResourceNotFoundException;
+import org.springframework.boot.context.config.ConfigDataResourceNotFoundException;
 import org.springframework.stereotype.Service;
 import com.example.prescriptionApp.repository.PrescriptionRepository;
+import org.springframework.web.client.ResourceAccessException;
 
 import java.time.LocalDate;
 import java.util.*;
@@ -34,7 +37,9 @@ public class PrescriptionService {
 
     public PrescriptionDto update(Long id, PrescriptionRequest req) {
         Prescription p = repo.findById(id)
-                .orElseThrow(() -> new RuntimeException("Prescription not found"));
+                .orElseThrow(() -> new ResourceNotFoundException("Prescription not found with id"+id));
+
+
         if (req.getPrescriptionDate() != null)
             p.setPrescriptionDate(req.getPrescriptionDate());
         if (req.getPatientName() != null && !req.getPatientName().isBlank())

@@ -35,7 +35,7 @@ public class PrescriptionController {
     }
 
     @PutMapping("/{id}")
-    public PrescriptionDto update(@PathVariable Long id, @Valid @RequestBody PrescriptionRequest req){
+    public PrescriptionDto update(@PathVariable Long id, @RequestBody PrescriptionRequest req){
         return service.update(id, req);
         }
 
