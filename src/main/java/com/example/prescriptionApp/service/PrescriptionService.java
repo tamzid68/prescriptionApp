@@ -5,13 +5,11 @@ import com.example.prescriptionApp.dto.PrescriptionReportDto;
 import com.example.prescriptionApp.dto.PrescriptionRequest;
 import com.example.prescriptionApp.entity.Prescription;
 import com.example.prescriptionApp.exception.ResourceNotFoundException;
-import org.springframework.boot.context.config.ConfigDataResourceNotFoundException;
-import org.springframework.stereotype.Service;
 import com.example.prescriptionApp.repository.PrescriptionRepository;
-import org.springframework.web.client.ResourceAccessException;
+import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
-import java.util.*;
+import java.util.List;
 import java.util.stream.Collectors;
 
 
@@ -19,26 +17,26 @@ import java.util.stream.Collectors;
 public class PrescriptionService {
     private final PrescriptionRepository repo;
 
-    public PrescriptionService(PrescriptionRepository repo){
+    public PrescriptionService(PrescriptionRepository repo) {
         this.repo = repo;
     }
 
-    public List<PrescriptionDto> getbyDateRange(LocalDate start, LocalDate end){
+    public List<PrescriptionDto> getbyDateRange(LocalDate start, LocalDate end) {
         return repo.findbyDataRange(start, end).stream()
                 .map(this::toDto)
                 .collect(Collectors.toList());
     }
 
-    public PrescriptionDto create(PrescriptionRequest req){
+    public PrescriptionDto create(PrescriptionRequest req) {
         Prescription p = new Prescription();
-        copy(req,p);
+        copy(req, p);
         repo.save(p);
         return toDto(p);
     }
 
     public PrescriptionDto update(Long id, PrescriptionRequest req) {
         Prescription p = repo.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Prescription not found with id"+id));
+                .orElseThrow(() -> new ResourceNotFoundException("Prescription not found with id" + id));
 
 
         if (req.getPrescriptionDate() != null)
@@ -60,19 +58,19 @@ public class PrescriptionService {
         return toDto(p);
     }
 
-    public List<PrescriptionReportDto> getReport(LocalDate from, LocalDate to){
+    public List<PrescriptionReportDto> getReport(LocalDate from, LocalDate to) {
         List<Object[]> results = repo.countByDateRange(from, to);
         return results.stream()
                 .map(r -> new PrescriptionReportDto((LocalDate) r[0], (Long) r[1]))
                 .collect(Collectors.toList());
     }
 
-    public void delete(Long id){
+    public void delete(Long id) {
         repo.deleteById(id);
     }
 
 
-    private void copy(PrescriptionRequest src, Prescription dest){
+    private void copy(PrescriptionRequest src, Prescription dest) {
         dest.setPrescriptionDate(src.getPrescriptionDate());
         dest.setPatientName(src.getPatientName());
         dest.setPatientAge(src.getPatientAge());
@@ -82,7 +80,7 @@ public class PrescriptionService {
         dest.setNextVisitDate(src.getNextVisitDate());
     }
 
-    private PrescriptionDto toDto(Prescription p){
+    private PrescriptionDto toDto(Prescription p) {
         PrescriptionDto dto = new PrescriptionDto();
         dto.setId(p.getId());
         dto.setPrescriptionDate(p.getPrescriptionDate());

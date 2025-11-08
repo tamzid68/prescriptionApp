@@ -1,8 +1,10 @@
 package com.example.prescriptionApp.dto;
 
-import lombok.*;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.time.LocalDate;
+
 @Getter
 @Setter
 public class PrescriptionDto {

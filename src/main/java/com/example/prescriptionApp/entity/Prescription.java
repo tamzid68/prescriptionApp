@@ -2,6 +2,7 @@ package com.example.prescriptionApp.entity;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
+
 import java.time.LocalDate;
 
 
@@ -16,7 +17,7 @@ public class Prescription {
     private LocalDate prescriptionDate;
 
     @NotBlank
-    @Size(max=100)
+    @Size(max = 100)
     private String patientName;
 
     @NotNull
@@ -36,6 +37,7 @@ public class Prescription {
     public Long getId() {
         return id;
     }
+
     public void setId(Long id) {
         this.id = id;
     }
@@ -43,6 +45,7 @@ public class Prescription {
     public LocalDate getPrescriptionDate() {
         return prescriptionDate;
     }
+
     public void setPrescriptionDate(LocalDate prescriptionDate) {
         this.prescriptionDate = prescriptionDate;
     }
@@ -50,6 +53,7 @@ public class Prescription {
     public String getPatientName() {
         return patientName;
     }
+
     public void setPatientName(String patientName) {
         this.patientName = patientName;
     }
@@ -57,6 +61,7 @@ public class Prescription {
     public Integer getPatientAge() {
         return patientAge;
     }
+
     public void setPatientAge(Integer patientAge) {
         this.patientAge = patientAge;
     }
@@ -64,6 +69,7 @@ public class Prescription {
     public String getPatientGender() {
         return patientGender;
     }
+
     public void setPatientGender(String patientGender) {
         this.patientGender = patientGender;
     }
@@ -71,6 +77,7 @@ public class Prescription {
     public String getDiagnosis() {
         return diagnosis;
     }
+
     public void setDiagnosis(String diagnosis) {
         this.diagnosis = diagnosis;
     }
@@ -78,6 +85,7 @@ public class Prescription {
     public String getMedicines() {
         return medicines;
     }
+
     public void setMedicines(String medicines) {
         this.medicines = medicines;
     }
@@ -85,6 +93,7 @@ public class Prescription {
     public LocalDate getNextVisitDate() {
         return nextVisitDate;
     }
+
     public void setNextVisitDate(LocalDate nextVisitDate) {
         this.nextVisitDate = nextVisitDate;
     }
